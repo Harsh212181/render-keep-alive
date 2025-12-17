@@ -2,16 +2,20 @@ name: Keep Render Site Alive
 
 on:
   schedule:
-    # Har 14 minute pe chalega
-    - cron: '*/14 * * * *'
-  workflow_dispatch:  # Manual run ke liye
+    # Multiple schedules for reliability
+    - cron: '0,14,28,42 * * * *'  # Exact minutes: 0, 14, 28, 42
+  workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping my website
+      - name: Keep Backend Alive
         run: |
-          echo "🕒 Pinging at $(date)"
-          curl -s  https://animabing.onrender.com/
-          echo "✅ Ping successful!"
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          echo "⏰ Scheduled run at: $TIMESTAMP"
+          
+          # Ping with timeout
+          curl --max-time 30 https://animabing.onrender.com/
+          
+          echo "✅ Successfully pinged backend"

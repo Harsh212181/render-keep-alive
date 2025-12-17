@@ -13,5 +13,5 @@ jobs:
       - name: Ping my website
         run: |
           echo "🕒 Pinging at $(date)"
-          curl -s  https://animabing.pages.dev/
+          curl -s  https://animabing.onrender.com/
           echo "✅ Ping successful!"
